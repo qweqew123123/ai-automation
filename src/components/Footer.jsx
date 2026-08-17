@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Linkedin, Instagram, Facebook } from 'lucide-react';
 import './Footer.css';
 
 function Footer() {
@@ -102,38 +102,30 @@ function Footer() {
           <div className="footer-stat"><b>99%</b><span>CLIENT SATISFACTION</span></div>
           <span className="stat-sep" />
           <div className="footer-stat"><b>15+</b><span>YEARS</span></div>
+          <span className="stat-sep" />
+          <div className="footer-stat"><b>3+</b><span>PRODUCTS</span></div>
         </div>
 
         <div className="footer-art">
-          <div className="footer-wordmark">
-            <svg viewBox="0 0 1240 260" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
-              <defs>
-                <mask id="webashlarLines">
-                  <rect width="1240" height="260" fill="#000000" />
-                  <rect x="0" y="104" width="1240" height="12" fill="#ffffff" />
-                  <rect x="0" y="144" width="1240" height="12" fill="#ffffff" />
-                  <rect x="0" y="184" width="1240" height="12" fill="#ffffff" />
-                  <rect x="0" y="212" width="1240" height="12" fill="#ffffff" />
-                </mask>
-              </defs>
-              <text
-                x="620"
-                y="224"
-                textAnchor="middle"
-                fontSize="178"
-                fontWeight="600"
-                letterSpacing="4"
-                fill="rgba(255,255,255,0.20)"
-                mask="url(#webashlarLines)"
-                style={{ fontFamily: 'var(--head)' }}
-              >
-                WEBASHLAR
-              </text>
-            </svg>
+          <div className="footer-wordmark" aria-hidden="true">
+            <div className="wm-track">
+              {[0, 1].map(g => (
+                <div className="wm-group" key={g}>
+                  {'WEBASHLAR'.split('').map((ch, i) => <span key={i}>{ch}</span>)}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="footer-copy">© 2026 All rights reserved by Webashlar Software Solution Pvt. Ltd.</div>
+        <div className="footer-copy">
+          <div className="footer-social">
+            <a aria-label="LinkedIn"><Linkedin size={15} strokeWidth={1.6} /></a>
+            <a aria-label="Instagram"><Instagram size={15} strokeWidth={1.6} /></a>
+            <a aria-label="Facebook"><Facebook size={15} strokeWidth={1.6} /></a>
+          </div>
+          © 2026 All rights reserved by Webashlar Software Solution Pvt. Ltd.
+        </div>
       </div>
     </footer>
   );
