@@ -1,87 +1,82 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import Aurora from '../components/Aurora.jsx';
+import FireGuardHowItWorks from '../components/FireGuardHowItWorks.jsx';
 import {
-  ArrowUpRight, ArrowRight, Flame, Target, Hand, ClipboardCheck, Headset, BarChart3,
-  Check, AlertTriangle, Gauge, Timer, ClipboardList, TrendingUp, FileCheck2, BookOpenCheck,
+  ArrowUpRight, ArrowRight, Hand, ClipboardCheck, Headset, BarChart3,
+  Check, Timer, ClipboardList, TrendingUp, Eye, Target, Flame,
   Factory, Warehouse, Building2, Droplets, FlaskConical, Zap, HeartPulse, School, Briefcase, Hotel,
-  Brain, TrendingDown, Layers, ShieldCheck, Medal,
+  ShieldCheck, ShieldX, ChevronLeft, ChevronRight,
 } from 'lucide-react';
+import './FireGuardVR.css';
 
-const challenges = [
-  ['Safety risks during live drills', AlertTriangle, 'Live fire drills put people and equipment at risk while they train.'],
-  ['Limited employee engagement', Gauge, 'Traditional sessions struggle to hold attention and build real participation.'],
-  ['Production downtime', Timer, 'Shutting down operations for drills disrupts production and delivery schedules.'],
-  ['Limited assessment capabilities', ClipboardList, 'Measuring individual performance during manual training is difficult.'],
-  ['High training costs', TrendingUp, 'Recurring costs for instructors, consumables and equipment add up quickly.'],
-  ['Manual compliance tracking', FileCheck2, 'Records live in spreadsheets and binders instead of being audit-ready.'],
-  ['Poor knowledge retention', BookOpenCheck, 'Passive learning fades fast when it is not practiced and reinforced.'],
+const traditional = [
+  ['Live drill risks', ShieldX, 'Real fire drills put people and equipment at risk while they train.'],
+  ['Production disruption', Timer, 'Shutting down operations for drills disrupts production schedules.'],
+  ['Limited repetition', TrendingUp, 'Training rarely gets practiced enough to build real confidence.'],
+  ['Manual tracking', ClipboardList, 'Records live in spreadsheets instead of being audit-ready.'],
+];
+
+const fgvr = [
+  ['Safe simulation', ShieldCheck, 'Practice in a completely safe, repeatable virtual environment.'],
+  ['Repeatable training', Headset, 'Run the same high-quality session any number of times.'],
+  ['Hands-on practice', Hand, 'Perform real extinguisher actions with hand tracking.'],
+  ['Measurable performance', BarChart3, 'Every response is scored and documented automatically.'],
+];
+
+const experienceGroups = [
+  ['IMMERSIVE', Headset, ['Immersive VR environment', 'Realistic industrial fire simulations', 'Hand tracking']],
+  ['PRACTICAL', Hand, ['Identify fire hazards', 'Correct extinguisher selection', 'PASS technique training']],
+  ['MEASURABLE', BarChart3, ['Performance assessment', 'Training analytics', 'Instant performance feedback', 'Quiz & certification']],
+  ['COMPLIANCE', ClipboardCheck, ['Digital assessments', 'Digital certification', 'Compliance-ready reporting', 'Standardized training']],
 ];
 
 const capabilities = [
-  ['Immersive VR Environment', Headset, 'Practice fire safety scenarios inside a realistic virtual environment without exposing employees to real-world hazards.'],
-  ['Fire Simulation', Flame, 'Experience realistic industrial fire simulations and practice the correct response.'],
-  ['PASS Technique Training', Target, 'Learn and perform the PASS technique for effective extinguisher use.'],
-  ['Hand Tracking', Hand, 'Use immersive interaction to make training feel more hands-on.'],
-  ['Quiz & Certification', ClipboardCheck, 'Assess knowledge and provide digital certification.'],
-  ['Training Analytics', BarChart3, 'Measure performance and maintain digital assessments and reports.'],
-];
-
-const steps = [
-  ['Wear Meta Quest Headset', 'Step into the simulation with the Meta Quest headset.'],
-  ['Explore Virtual Factory', 'Move through a realistic industrial environment.'],
-  ['Identify Fire Hazard', 'Spot hazards and assess the situation.'],
-  ['Select Correct Extinguisher', 'Choose the right extinguisher for the fire type.'],
-  ['Practice PASS Technique', 'Perform Pull, Aim, Squeeze and Sweep.'],
-  ['Extinguish the Fire', 'Safely control and extinguish the fire.'],
-  ['Performance Assessment', 'Get instant, measurable performance feedback.'],
-  ['Digital Certification', 'Complete the training with a digital certificate.'],
-];
-
-const benefits = [
-  ['Faster Emergency Response', Zap, 'Improve reaction time and decision-making during fire emergencies.'],
-  ['Better Knowledge Retention', Brain, 'Interactive learning improves memory, confidence, and practical skills.'],
-  ['Zero-Risk Learning', ShieldCheck, 'Train employees safely without exposing them to real fire hazards.'],
-  ['Lower Training Costs', TrendingDown, 'Reduce recurring expenses for live drills, consumables, and instructor-led sessions.'],
-  ['Standardized Training', Layers, 'Deliver the same training quality across multiple locations and teams.'],
-  ['Compliance Ready', ClipboardCheck, 'Maintain digital assessments, certificates, and reports for regulatory compliance.'],
+  ['Immersive VR Environment', Headset, 'Realistic industrial fire simulations in a safe, repeatable virtual environment on Meta Quest 3 / 3S.', '#1351D8'],
+  ['Hand Tracking', Hand, 'Perform real extinguisher actions — Pull, Aim, Squeeze, Sweep — with natural hand tracking.', '#0ea5e9'],
+  ['Extinguisher Selection', Target, 'Select the correct extinguisher from five types matched to the fire class you are facing.', '#10b981'],
+  ['Hazard Identification', Eye, 'Spot fire hazards and assess the situation before deciding how to respond.', '#f59e0b'],
+  ['Performance Assessment', BarChart3, 'Every response is scored and documented with instant, measurable performance feedback.', '#8b5cf6'],
+  ['Certification & Reporting', ClipboardCheck, 'Digital assessments, digital certification and compliance-ready training records.', '#ef4444'],
 ];
 
 const fgIndustries = [
-  ['Manufacturing', Factory], ['Construction', Building2], ['Warehousing & Logistics', Warehouse],
-  ['Oil & Gas', Droplets], ['Chemical Plants', FlaskConical], ['Power Generation', Zap],
-  ['Healthcare', HeartPulse], ['Education & Training', School], ['Corporate Offices', Briefcase], ['Hospitality', Hotel],
-];
-
-const glance = [
-  ['Compatible', 'Meta Quest 3 & 3S'],
-  ['Average Training Session', '3–5 Min'],
-  ['Guided Training Steps', '5'],
-  ['Extinguisher Types', '14'],
-];
-
-const microStats = [
-  ['Meta Quest 3 & 3S', 'COMPATIBLE'],
-  ['3–5 Min', 'AVG. TRAINING SESSION'],
-  ['5', 'GUIDED TRAINING STEPS'],
-  ['14', 'EXTINGUISHER TYPES'],
+  ['Manufacturing', Factory, 'Standardized fire safety training across production environments.', '/images/fg-industries/fg-man.jpg'],
+  ['Construction', Building2, 'Hazard response training for evolving job sites.', '/images/fg-industries/fg-con.jpg'],
+  ['Warehousing & Logistics', Warehouse, 'Safety drills for large facilities and distributed teams.', '/images/fg-industries/fg-war.jpg'],
+  ['Oil & Gas', Droplets, 'High-risk environment training in a safe, repeatable simulation.', '/images/fg-industries/fg-oil.jpg'],
+  ['Chemical Plants', FlaskConical, 'Practice emergency response without hazardous exposure.', '/images/fg-industries/fg-che.jpg'],
+  ['Power Generation', Zap, 'Ready teams for facility-specific fire scenarios.', '/images/fg-industries/fg-pow.jpg'],
+  ['Healthcare', HeartPulse, 'Train clinical and support staff without interrupting care.', '/images/fg-industries/fg-hea.jpg'],
+  ['Education & Training', School, 'Safe, repeatable fire safety instruction for institutions.', '/images/fg-industries/fg-edu.jpg'],
+  ['Corporate Offices', Briefcase, 'Workplace fire readiness for office teams.', '/images/fg-industries/fg-cor.jpg'],
+  ['Hospitality', Hotel, 'Guest and staff safety training for hotels and venues.', '/images/fg-industries/fg-hos.jpg'],
 ];
 
 const go = id => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
 function FireGuardVR() {
+  const [industry, setIndustry] = useState(0);
+  const [indDir, setIndDir] = useState(1);
+
+  const goIndustry = next => {
+    setIndDir(next > industry || (industry === fgIndustries.length - 1 && next === 0) ? 1 : -1);
+    setIndustry(next);
+  };
+
   return (
     <>
       {/* 01 — HERO */}
       <section className="hero fg-hero">
         <div className="hero-copy">
           <div className="breadcrumb"><a onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Home</a><span>/</span><Link to="/products">Products</Link><span>/</span><b>FireGuard VR</b></div>
-          <div className="eyebrow"><span className="dot" /> FIREGUARD VR · VR FIRE SAFETY TRAINING</div>
+          <div className="eyebrow"><span className="dot" /> IMMERSIVE VR FIRE SAFETY TRAINING PLATFORM</div>
           <h1>Experience Fire Safety<br /><span>Before Facing It</span><br />in Real Life.</h1>
-          <p>Immersive VR fire safety training that helps employees identify hazards, choose the right extinguisher, master the PASS technique, and build confidence before a real emergency happens.</p>
+          <p>FireGuard VR enables employees to identify fire hazards, select the right extinguisher, master the PASS technique and measure their performance in a safe, repeatable virtual environment.</p>
           <div className="actions">
             <button className="primary" onClick={() => go('contact')}>Request a Demo <ArrowUpRight size={18} /></button>
-            <button className="textbtn" onClick={() => go('how')}>See How It Works <ArrowRight size={17} /></button>
+            <button className="textbtn" onClick={() => go('how')}>Explore Training <ArrowRight size={17} /></button>
           </div>
         </div>
 
@@ -109,149 +104,152 @@ function FireGuardVR() {
           </div>
 
           <div className="fg-microstats">
-            {microStats.map(([v, l]) => <div className="fg-micro" key={l}><b>{v}</b><span>{l}</span></div>)}
+            {[['Meta Quest 3 & 3S', 'COMPATIBLE'], ['3–5 Min', 'AVG. SESSION'], ['8', 'GUIDED STEPS'], ['5', 'EXTINGUISHER TYPES']].map(([v, l]) => <div className="fg-micro" key={l}><b>{v}</b><span>{l}</span></div>)}
           </div>
         </div>
       </section>
 
-      {/* 02 — BUSINESS CHALLENGES */}
-      <section className="problem" id="challenge">
-        <div className="section-label">01 — THE CHALLENGE</div>
+      {/* 02 — THE PROBLEM + SOLUTION */}
+      <section className="problem fg-problem" id="problem">
+        <div className="section-label">02 — THE PROBLEM</div>
         <div className="two-col">
-          <h2>Traditional Fire Safety Training<br /><em>Isn&apos;t Enough.</em></h2>
+          <h2>Traditional fire safety training<br /><em>isn&apos;t enough.</em></h2>
           <div>
-            <p>Traditional training can struggle with safety risks, engagement, downtime and measurable outcomes. FireGuard VR is built to close those gaps.</p>
-            <div className="fg-challenge-grid">
-              {challenges.map(([t, I], i) => <div className="fg-challenge" key={t}><span className="fg-challenge-num">0{i + 1}</span><I size={17} className="fg-challenge-icon" /><b>{t}</b></div>)}
+            <p>Real fire drills can introduce safety risks, disrupt operations and make repeated practice difficult. FireGuard VR creates a safe and repeatable environment where employees can experience, practice and improve their emergency response.</p>
+          </div>
+        </div>
+
+        <div className="fg-vs">
+          <div className="fg-vs-col fg-vs-traditional">
+            <div className="fg-vs-head"><span className="fg-vs-tag">TRADITIONAL</span><h3>Traditional Training</h3></div>
+            <div className="fg-vs-list">
+              {traditional.map(([t, I, d]) => (
+                <div className="fg-vs-item" key={t}><I size={16} /><div><b>{t}</b><small>{d}</small></div></div>
+              ))}
+            </div>
+          </div>
+
+          <div className="fg-vs-mid">
+            <ArrowRight size={26} />
+            <span>FIREGUARD<br />VR</span>
+          </div>
+
+          <div className="fg-vs-col fg-vs-vr">
+            <div className="fg-vs-head"><span className="fg-vs-tag fg-vs-tag-on">FIREGUARD VR</span><h3>Immersive VR Training</h3></div>
+            <div className="fg-vs-list">
+              {fgvr.map(([t, I, d]) => (
+                <div className="fg-vs-item" key={t}><I size={16} /><div><b>{t}</b><small>{d}</small></div></div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* 03 — SOLUTION */}
-      <section className="solution" id="solution">
-        <div className="section-label">02 — THE SOLUTION</div>
-        <h2>Learn by Doing with<br /><span>Immersive Virtual Reality.</span></h2>
-        <p className="lead">FireGuard VR is an immersive virtual reality fire safety training platform. Employees can:</p>
-        <div className="fg-progress">
-          {['Identify workplace fire hazards', 'Practice correct extinguisher selection', 'Learn and perform the PASS technique', 'Receive instant performance feedback', 'Complete safe and repeatable training sessions'].map((x, i) => (
-            <motion.div className="fg-progress-item" key={x} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} whileHover={{ y: -5, transition: { duration: 0.3 } }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}><span>0{i + 1}</span><b>{x}</b></motion.div>
-          ))}
+      {/* 03 — HOW IT WORKS */}
+      <FireGuardHowItWorks />
+
+      {/* 04 — TRAINING EXPERIENCE + OUTCOMES */}
+      <section className="features fg-experience" id="experience">
+        <div className="section-label">04 — THE TRAINING EXPERIENCE</div>
+        <div className="two-col">
+          <h2>More than simulation.<br /><em>It&apos;s measurable training.</em></h2>
+          <p className="lead">Everything employees need to learn, practice and prove fire safety skills — in one immersive VR platform.</p>
+        </div>
+
+        <div className="fg-exp-grid">
+          <div className="fg-exp-visual">
+            <div className="fg-exp-photo"><img src="/images/fg-exp-bg.jpg" alt="FireGuard VR immersive fire training experience" loading="lazy" /></div>
+          </div>
+
+          <div className="fg-exp-groups">
+            {experienceGroups.map(([title, I, items]) => (
+              <div className="fg-exp-group" key={title}>
+                <div className="fg-exp-group-head"><I size={18} /><b>{title}</b></div>
+                <ul>
+                  {items.map(x => <li key={x}><Check size={14} />{x}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* 04 — KEY CAPABILITIES */}
-      <section className="features" id="capabilities">
-        <div className="section-label">03 — KEY CAPABILITIES</div>
-        <div className="two-col"><h2>Built for real fire safety<br /><em>training outcomes.</em></h2><p className="lead">Everything employees need to learn, practice and prove fire safety skills in VR.</p></div>
-        <div className="feature-grid fg-feature-grid">
-          {capabilities.map(([t, I, d], i) => (
-            <motion.article key={t} whileHover={{ y: -4 }}>
-              <I size={22} /><small>0{i + 1}</small><h3>{t}</h3><p>{d}</p><ArrowUpRight className="arr" size={19} />
+      {/* CAPABILITIES */}
+      <section className="features fg-capabilities">
+        <div className="section-label">CAPABILITIES</div>
+        <div className="two-col">
+          <h2>Built for the moment<br /><em>when it matters most.</em></h2>
+          <p className="lead">The training tools your team needs to learn, practice and prove fire safety skills — in one immersive VR platform.</p>
+        </div>
+        <div className="feature-grid">
+          {capabilities.map(([title, I, text, c], i) => (
+            <motion.article key={title} whileHover={{ y: -4 }}>
+              <span className="feature-icon" style={{ background: c + '1a', color: c }}><I size={22} /></span>
+              <small>0{i + 1}</small>
+              <h3>{title}</h3>
+              <p>{text}</p>
             </motion.article>
           ))}
         </div>
       </section>
 
-      {/* 05 — HOW IT WORKS */}
-      <section className="how" id="how">
-        <div className="section-label">04 — HOW IT WORKS</div>
-        <h2>A guided journey from<br /><em>headset to certification.</em></h2>
-        <p className="lead">A repeatable training flow that takes each employee from entering the simulation to earning a certificate.</p>
-        <div className="fg-timeline">
-          {steps.map(([t, d], i) => (
-            <motion.div className="fg-timeline-step" key={t} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ delay: (i % 4) * 0.1 }}>
-              <div className="fg-timeline-node"><span>{i + 1}</span></div>
-              <h3>{t}</h3>
-              <p>{d}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* 06 — BENEFITS / OUTCOMES */}
-      <section className="why" id="outcomes">
-        <div className="section-label">05 — MEASURABLE PERFORMANCE OUTCOMES</div>
-        <h2>Measurable Performance<br /><span>Outcomes.</span></h2>
-        <div className="fg-benefits-grid">
-          {benefits.map(([t, I, d], i) => (
-            <div className="fg-benefit" key={t}>
-              <div className="fg-benefit-icon"><I size={18} /></div>
-              <small>0{i + 1}</small>
-              <h3>{t}</h3>
-              <p>{d}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 07 — INDUSTRIES SERVED */}
-      <section className="industries" id="industries">
-        <div className="section-label">06 — INDUSTRIES SERVED</div>
-        <h2>Built for<br /><em>High-Risk Workplaces.</em></h2>
-        <div className="fg-industry-grid">
-          {fgIndustries.map(([name, I]) => (
-            <motion.div className="fg-industry" key={name} whileHover={{ y: -4 }}>
-              <I size={20} /><span>{name}</span>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* 08 — AT A GLANCE */}
-      <section className="fg-glance">
-        <div className="section-label" style={{ color: 'var(--blue)' }}>07 — AT A GLANCE</div>
-        <h2>FireGuard VR<br /><span>at a Glance.</span></h2>
-        <div className="fg-glance-grid">
-          {glance.map(([k, v], i) => (
-            <div className="fg-glance-cell" key={k}><small>{k}</small><b>{v}</b><i /></div>
-          ))}
-        </div>
-      </section>
-
-      {/* 09 — COMPLIANCE & REPORTING */}
-      <section className="fg-compliance">
-        <div className="section-label" style={{ color: 'var(--blue)' }}>08 — COMPLIANCE &amp; REPORTING</div>
-        <h2>Compliance Ready.<br /><span>Measurable. Repeatable.</span></h2>
-        <div className="fg-compliance-inner">
-          <div className="fg-compliance-copy">
-            <p>Maintain digital assessments, certificates, and reports for regulatory compliance.</p>
-            <div className="fg-compliance-list">
-              {['Digital assessments', 'Certificates', 'Training reports', 'Standardized training', 'Performance measurement'].map((x, i) => (
-                <div className="fg-compliance-item" key={x}><ShieldCheck size={16} /><span>0{i + 1}</span>{x}</div>
-              ))}
-            </div>
+      {/* 05 — INDUSTRIES */}
+      <section className="industries fg-industries" id="industries">
+        <div className="section-label">05 — BUILT FOR REAL-WORLD TRAINING</div>
+        <div className="two-col">
+          <h2>Training built for teams<br /><em>that need to be ready.</em></h2>
+          <div>
+            <p>Deliver standardized fire safety training across different environments, teams and locations.</p>
           </div>
-          <div className="fg-report-card">
-            <div className="fg-report-head"><b>TRAINING RECORD</b><span><i className="fg-dot" /> SAMPLE REPORT</span></div>
-            <div className="fg-report-row fg-report-h"><span>Employee</span><span>Score</span><span>Hazards</span><span>Extinguisher</span><span>PASS</span><span>Result</span></div>
-            {[
-              ['R. Mehta', '92', '4 / 4', 'ABC', 'Pass', 'Certified'],
-              ['S. Patel', '88', '3 / 4', 'CO₂', 'Pass', 'Certified'],
-              ['A. Kumar', '79', '3 / 4', 'ABC', 'Review', 'Retry'],
-              ['K. Joshi', '91', '4 / 4', 'ABC', 'Pass', 'Certified'],
-              ['P. Nair', '85', '3 / 4', 'CO₂', 'Pass', 'Certified'],
-              ['D. Verma', '76', '2 / 4', 'ABC', 'Review', 'Retry'],
-            ].map(r => (
-              <div className="fg-report-row" key={r[0]}>
-                {r.map((c, i) => <span key={i} className={i === r.length - 1 ? (c === 'Certified' ? 'fg-ok' : 'fg-warn') : ''}>{c}</span>)}
-              </div>
+        </div>
+
+        <div className="fg-ind">
+          <div className="fg-ind-tabs">
+            {fgIndustries.map(([name, I], i) => (
+              <button className={`fg-ind-tab${industry === i ? ' active' : ''}`} key={name} onClick={() => goIndustry(i)}>
+                <I size={16} /><span>{name}</span>
+              </button>
             ))}
-            <div className="fg-report-foot"><Medal size={14} /> Digital certificate issued on completion</div>
+          </div>
+
+          <div className="fg-ind-nav">
+            <button className="fg-ind-arrow" aria-label="Previous industry" onClick={() => goIndustry((industry - 1 + fgIndustries.length) % fgIndustries.length)}><ChevronLeft size={20} /></button>
+            <div className="fg-ind-visual">
+              <AnimatePresence mode="wait" custom={indDir}>
+                <motion.figure key={industry} className="fg-ind-figure"
+                  initial={{ opacity: 0, x: 40 * indDir, scale: 0.98 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  exit={{ opacity: 0, x: -40 * indDir, scale: 0.98 }}
+                  transition={{ duration: 0.32, ease: [0.22, 0.61, 0.36, 1] }}>
+                  <img src={fgIndustries[industry][3]} alt={fgIndustries[industry][0]} loading="lazy" />
+                  <figcaption>
+                    <h3>{fgIndustries[industry][0]}</h3>
+                    <p>{fgIndustries[industry][2]}</p>
+                  </figcaption>
+                </motion.figure>
+              </AnimatePresence>
+            </div>
+            <button className="fg-ind-arrow" aria-label="Next industry" onClick={() => goIndustry((industry + 1) % fgIndustries.length)}><ChevronRight size={20} /></button>
           </div>
         </div>
       </section>
 
-      {/* 10 — FINAL CTA */}
+      {/* 06 — FINAL CTA */}
       <section className="cta fg-cta" id="contact">
-        <div className="cta-aurora" />
+        <div className="cta-aurora"><Aurora colorStops={['#1351D8', '#6fcff5', '#0b3aa8']} amplitude={1.2} blend={0.6} /></div>
         <div className="cta-inner">
-          <div className="section-label light">09 — PREPARE · TRAIN · CERTIFY</div>
-          <h2>Prepare Employees Before<br /><span>Emergencies Happen.</span></h2>
-          <p>Empower your workforce with immersive VR fire safety training that improves confidence, reduces operational risks and strengthens workplace compliance.</p>
-          <div className="actions fg-cta-actions">
-            <button className="primary lightbtn">Request a Demo <ArrowUpRight size={18} /></button>
+          <div className="cta-copy">
+            <div className="section-label light">READY TO PREPARE YOUR TEAM?</div>
+            <h2>Prepare employees before<br /><span>emergencies happen.</span></h2>
+            <p>Empower your workforce with immersive VR fire safety training that improves confidence, reduces operational risks and strengthens workplace compliance.</p>
           </div>
+          <form className="cta-form" onSubmit={e => e.preventDefault()}>
+            <h3>Request a Demo</h3>
+            <div className="cta-row"><label>Full Name<input type="text" name="name" placeholder="Your name" required /></label><label>Work Email<input type="email" name="email" placeholder="you@company.com" required /></label></div>
+            <div className="cta-row"><label>Company<input type="text" name="company" placeholder="Company name" /></label><label>Phone Number<input type="tel" name="phone" placeholder="+1 555 000 0000" /></label></div>
+            <label>Message<textarea name="message" rows="4" placeholder="Tell us about your fire safety training needs" /></label>
+            <button type="submit" className="primary lightbtn">Request a Demo <ArrowUpRight size={18} /></button>
+          </form>
         </div>
       </section>
     </>

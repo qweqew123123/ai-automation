@@ -1,0 +1,37 @@
+/* ===== FIREGUARD VR — HOW IT WORKS (cinematic presentation) ===== */
+.fghiw{position:relative;min-height:85vh;padding:9vh 7% 6vh;display:flex;overflow:hidden}
+.fghiw-bg{position:absolute;inset:0;z-index:0}
+.fghiw-bg-img{position:absolute;inset:0;background-size:cover;background-position:center;will-change:transform,opacity}
+.fghiw-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(6,10,14,.94) 0%,rgba(6,10,14,.8) 45%,rgba(6,10,14,.96) 100%);pointer-events:none}
+.fghiw-inner{position:relative;z-index:2;display:flex;flex-direction:column;width:100%}
+.fghiw-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8vh}
+.fghiw-label{font-size:11px;letter-spacing:1.8px;font-weight:600;color:#8fa3b0;font-family:'Syne',sans-serif}
+.fghiw-title{font-family:var(--head);font-weight:600;font-size:clamp(40px,5vw,64px);line-height:.98;letter-spacing:-2.4px;color:#fff;margin:18px 0 0}
+.fghiw-nav{font-size:11px;letter-spacing:1.8px;font-weight:800;color:#6fcff5;border:1px solid rgba(111,207,245,.3);border-radius:30px;padding:8px 16px;white-space:nowrap}
+.fghiw-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px 26px;align-items:start}
+.fghiw-step{position:relative;padding-top:20px;border-top:1px solid rgba(255,255,255,.16);transition:opacity .4s ease}
+.fghiw-step .fghiw-num{font-family:var(--head);font-size:13px;font-weight:600;color:var(--blue);display:block;margin-bottom:14px;transition:color .3s ease}
+.fghiw-step h3{font-family:var(--head);font-weight:600;font-size:15px;letter-spacing:.6px;color:#e8eef2;line-height:1.3;margin:0 0 10px;transition:color .3s ease}
+.fghiw-step p{font-size:12px;line-height:1.6;color:#9fb2c0;margin:0;max-width:190px}
+.fghiw-rule{position:absolute;top:-1px;left:0;width:0;height:2px;background:var(--blue);transition:width .4s ease;display:block}
+.fghiw-step:not(.on){opacity:.55}
+.fghiw-step.on{opacity:1}
+.fghiw-step.on .fghiw-num{color:#fff}
+.fghiw-step.on h3{color:#fff}
+.fghiw-step:hover .fghiw-rule,.fghiw-step.on .fghiw-rule{width:100%}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1000px){
+  .fghiw{padding:9vh 6% 7vh;min-height:auto}
+  .fghiw-top{margin-bottom:7vh}
+  .fghiw-steps{grid-template-columns:repeat(2,1fr);gap:26px 24px}
+  .fghiw-step p{max-width:none}
+}
+@media(max-width:700px){
+  .fghiw{padding:10vh 6% 8vh}
+  .fghiw-top{flex-direction:column;gap:22px;margin-bottom:6vh}
+  .fghiw-nav{align-self:flex-start}
+  .fghiw-title{font-size:clamp(36px,11vw,52px)}
+  .fghiw-steps{grid-template-columns:1fr;gap:30px}
+  .fghiw-step p{max-width:100%}
+}
