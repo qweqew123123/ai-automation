@@ -1,0 +1,62 @@
+/* ===== Okta-Med headings — loaded globally via main.jsx ===== */
+
+@font-face {
+  font-family: 'Okta-Med';
+  src:
+    url('/fonts/Okta-Med.woff2') format('woff2'),
+    url('/fonts/Okta-Med.woff') format('woff'),
+    url('/fonts/Okta-Med.ttf') format('truetype'),
+    url('/fonts/Okta-Med.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Normalize heading font variable (was 'okta-med' without files) */
+:root {
+  --head: 'Okta-Med', 'DM Sans', sans-serif;
+}
+
+/* Enforce Okta-Med on every heading across the project,
+   including ones missing an explicit font-family
+   (.fg-hero h1, .hiw-head h2, etc.) */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--head);
+}
+
+/* Explicit fixes for headings that had no font-family */
+.fg-hero h1,
+.hiw-head h2 {
+  font-family: var(--head);
+}
+
+/* ===== Section headings — reduced by 8px (mobile) ===== */
+@media (max-width: 700px) {
+  .problem h2,
+  .solution h2,
+  .how h2,
+  .features h2,
+  .industries h2,
+  .why h2,
+  .solve h2,
+  .dashboard h2,
+  .impact h2,
+  .fg-glance h2,
+  .fg-compliance h2 {
+    font-size: 31px;
+  }
+  .cta h2 {
+    font-size: 32px;
+  }
+  .fghiw-title {
+    font-size: clamp(28px, 11vw, 44px);
+  }
+  .footer-statement {
+    font-size: clamp(36px, 12vw, 56px);
+  }
+}

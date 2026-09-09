@@ -23,13 +23,13 @@ const products = [
     tag: 'VR TRAINING',
   },
   {
-    name: 'Bus & Driver Management Suite',
-    category: 'Transport Management',
-    desc: 'Digital management solution for bus operations and driver management.',
+    name: 'IntelliFleet',
+    category: 'Bus & Driver Management Suite',
+    desc: 'Operations console for buses, drivers, routes and passengers — live tracking, boarding scans and compliance in one workspace.',
     img: '/images/bus.jpg',
     to: '/products/bus-driver-management',
-    cta: 'Explore Bus & Driver Management',
-    tag: 'OPERATIONS',
+    cta: 'Explore IntelliFleet',
+    tag: 'INTELLIFLEET',
   },
 ];
 

@@ -5,8 +5,8 @@
 .fghiw-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(6,10,14,.94) 0%,rgba(6,10,14,.8) 45%,rgba(6,10,14,.96) 100%);pointer-events:none}
 .fghiw-inner{position:relative;z-index:2;display:flex;flex-direction:column;width:100%}
 .fghiw-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8vh}
-.fghiw-label{font-size:11px;letter-spacing:1.8px;font-weight:600;color:#8fa3b0;font-family:'Syne',sans-serif}
-.fghiw-title{font-family:var(--head);font-weight:600;font-size:clamp(40px,5vw,64px);line-height:.98;letter-spacing:-2.4px;color:#fff;margin:18px 0 0}
+.fghiw-label{font-size:11px;letter-spacing:1.8px;font-weight:600;color:var(--blue);font-family:'Syne',sans-serif}
+.fghiw-title{font-family:var(--head);font-weight:600;font-size:clamp(32px,4.5vw,56px);line-height:.98;letter-spacing:-2.4px;color:#fff;margin:18px 0 0}
 .fghiw-nav{font-size:11px;letter-spacing:1.8px;font-weight:800;color:#6fcff5;border:1px solid rgba(111,207,245,.3);border-radius:30px;padding:8px 16px;white-space:nowrap}
 .fghiw-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px 26px;align-items:start}
 .fghiw-step{position:relative;padding-top:20px;border-top:1px solid rgba(255,255,255,.16);transition:opacity .4s ease}

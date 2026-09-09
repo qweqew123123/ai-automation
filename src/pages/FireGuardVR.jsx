@@ -26,8 +26,8 @@ const fgvr = [
 ];
 
 const experienceGroups = [
-  ['IMMERSIVE', Headset, ['Immersive VR environment', 'Realistic industrial fire simulations', 'Hand tracking']],
-  ['PRACTICAL', Hand, ['Identify fire hazards', 'Correct extinguisher selection', 'PASS technique training']],
+  ['IMMERSIVE', Headset, ['Immersive VR environment', 'Realistic industrial fire simulations', 'Hand tracking', 'Guided factory walkthrough']],
+  ['PRACTICAL', Hand, ['Identify fire hazards', 'Correct extinguisher selection', 'PASS technique training', 'Live extinguishing practice']],
   ['MEASURABLE', BarChart3, ['Performance assessment', 'Training analytics', 'Instant performance feedback', 'Quiz & certification']],
   ['COMPLIANCE', ClipboardCheck, ['Digital assessments', 'Digital certification', 'Compliance-ready reporting', 'Standardized training']],
 ];
@@ -81,26 +81,8 @@ function FireGuardVR() {
         </div>
 
         <div className="fg-visual">
-          <div className="fg-sim-card">
-            <div className="fg-sim-head"><span><i className="fg-dot" /> SIMULATION</span><span>FACTORY FLOOR · FIRE DRILL</span></div>
-            <div className="fg-scene">
-              <div className="fg-hud fg-hud-tl" /><div className="fg-hud fg-hud-tr" /><div className="fg-hud fg-hud-bl" /><div className="fg-hud fg-hud-br" />
-              <div className="fg-scene-floor" />
-              <div className="fg-building fg-building-1"><i /><i /><i /><i /><i /><i /></div>
-              <div className="fg-building fg-building-2"><i /><i /><i /><i /></div>
-              <div className="fg-machine"><i /><i /></div>
-              <div className="fg-worker">
-                <span className="fg-worker-head"><i className="fg-vr-band" /></span>
-                <span className="fg-worker-body" />
-                <span className="fg-worker-arm" />
-              </div>
-              <div className="fg-extinguisher"><span className="fg-ext-tank" /><span className="fg-ext-hose" /></div>
-              <div className="fg-fire"><span className="fg-flame fg-f1" /><span className="fg-flame fg-f2" /><span className="fg-flame fg-f3" /></div>
-              <div className="fg-reticle"><i className="fg-reticle-ring" /><i className="fg-reticle-cross fg-rc-h" /><i className="fg-reticle-cross fg-rc-v" /></div>
-              <div className="fg-chip fg-chip-step">STEP 4 · PASS TECHNIQUE</div>
-              <div className="fg-chip fg-chip-ok"><Check size={11} /> TARGET ACQUIRED</div>
-            </div>
-            <div className="fg-sim-foot"><span>IDENTIFY HAZARD</span><span>SELECT EXTINGUISHER</span><span className="fg-foot-active">APPLY PASS</span><span>EXTINGUISH</span></div>
+          <div className="fg-video-placeholder">
+            <span>Video placeholder</span>
           </div>
 
           <div className="fg-microstats">
@@ -109,38 +91,33 @@ function FireGuardVR() {
         </div>
       </section>
 
-      {/* 02 — THE PROBLEM + SOLUTION */}
-      <section className="problem fg-problem" id="problem">
-        <div className="section-label">02 — THE PROBLEM</div>
-        <div className="two-col">
-          <h2>Traditional fire safety training<br /><em>isn&apos;t enough.</em></h2>
-          <div>
-            <p>Real fire drills can introduce safety risks, disrupt operations and make repeated practice difficult. FireGuard VR creates a safe and repeatable environment where employees can experience, practice and improve their emergency response.</p>
+      {/* 02 — THE PROBLEM + SOLUTION (Old vs New) */}
+      <section className="fg-oldnew" id="problem">
+        <div className="fg-oldnew-grid">
+          <div className="fg-oldnew-left">
+            <span className="fg-oldnew-eyebrow">WHAT WE SOLVE</span>
+            <h2>Traditional fire safety<br />training<br />isn&apos;t enough.</h2>
           </div>
-        </div>
-
-        <div className="fg-vs">
-          <div className="fg-vs-col fg-vs-traditional">
-            <div className="fg-vs-head"><span className="fg-vs-tag">TRADITIONAL</span><h3>Traditional Training</h3></div>
-            <div className="fg-vs-list">
-              {traditional.map(([t, I, d]) => (
-                <div className="fg-vs-item" key={t}><I size={16} /><div><b>{t}</b><small>{d}</small></div></div>
-              ))}
+          <div className="fg-oldnew-table">
+            <div className="fg-oldnew-head">
+              <span>Traditional Training</span>
+              <span>FireGuard VR</span>
             </div>
-          </div>
-
-          <div className="fg-vs-mid">
-            <ArrowRight size={26} />
-            <span>FIREGUARD<br />VR</span>
-          </div>
-
-          <div className="fg-vs-col fg-vs-vr">
-            <div className="fg-vs-head"><span className="fg-vs-tag fg-vs-tag-on">FIREGUARD VR</span><h3>Immersive VR Training</h3></div>
-            <div className="fg-vs-list">
-              {fgvr.map(([t, I, d]) => (
-                <div className="fg-vs-item" key={t}><I size={16} /><div><b>{t}</b><small>{d}</small></div></div>
-              ))}
-            </div>
+            {traditional.map(([t, , d], i) => {
+              const [rt, , rd] = fgvr[i];
+              return (
+                <div className="fg-oldnew-row" key={t}>
+                  <div className="fg-oldnew-cell fg-oldnew-cell--left">
+                    <b>{t}</b>
+                    <span>— {d}</span>
+                  </div>
+                  <div className="fg-oldnew-cell fg-oldnew-cell--right">
+                    <b><i><Check size={10} strokeWidth={3} /></i> {rt}</b>
+                    <span>— {rd}</span>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -150,19 +127,28 @@ function FireGuardVR() {
 
       {/* 04 — TRAINING EXPERIENCE + OUTCOMES */}
       <section className="features fg-experience" id="experience">
-        <div className="section-label">04 — THE TRAINING EXPERIENCE</div>
+        <div className="section-label">THE TRAINING EXPERIENCE</div>
         <div className="two-col">
           <h2>More than simulation.<br /><em>It&apos;s measurable training.</em></h2>
           <p className="lead">Everything employees need to learn, practice and prove fire safety skills — in one immersive VR platform.</p>
         </div>
 
         <div className="fg-exp-grid">
-          <div className="fg-exp-visual">
+          <div className="fg-exp-col fg-exp-col--left">
+            {experienceGroups.slice(0, 2).map(([title, I, items]) => (
+              <div className="fg-exp-group" key={title}>
+                <div className="fg-exp-group-head"><I size={18} /><b>{title}</b></div>
+                <ul>
+                  {items.map(x => <li key={x}><Check size={14} />{x}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <div className="fg-exp-center">
             <div className="fg-exp-photo"><img src="/images/fg-exp-bg.jpg" alt="FireGuard VR immersive fire training experience" loading="lazy" /></div>
           </div>
-
-          <div className="fg-exp-groups">
-            {experienceGroups.map(([title, I, items]) => (
+          <div className="fg-exp-col fg-exp-col--right">
+            {experienceGroups.slice(2, 4).map(([title, I, items]) => (
               <div className="fg-exp-group" key={title}>
                 <div className="fg-exp-group-head"><I size={18} /><b>{title}</b></div>
                 <ul>
@@ -195,7 +181,7 @@ function FireGuardVR() {
 
       {/* 05 — INDUSTRIES */}
       <section className="industries fg-industries" id="industries">
-        <div className="section-label">05 — BUILT FOR REAL-WORLD TRAINING</div>
+        <div className="section-label">BUILT FOR REAL-WORLD TRAINING</div>
         <div className="two-col">
           <h2>Training built for teams<br /><em>that need to be ready.</em></h2>
           <div>

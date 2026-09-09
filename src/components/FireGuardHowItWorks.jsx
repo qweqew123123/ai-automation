@@ -80,7 +80,7 @@ function FireGuardHowItWorks() {
       <div className="fghiw-inner">
         <div className="fghiw-top">
           <div className="fghiw-top-left">
-            <motion.span className="fghiw-label" initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: 'easeOut' }}>03 — HOW IT WORKS</motion.span>
+            <motion.span className="fghiw-label" initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: 'easeOut' }}>HOW IT WORKS</motion.span>
             <motion.h2 className="fghiw-title" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.08, ease: 'easeOut' }}>EXPERIENCE.<br />PRACTICE.<br />IMPROVE.</motion.h2>
           </div>
           <motion.div className="fghiw-nav" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.15 }}>01 — 08</motion.div>
