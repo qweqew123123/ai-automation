@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import Aurora from '../components/Aurora.jsx';
 
 const products = [
   {
@@ -64,12 +65,20 @@ function Products() {
       </section>
 
       <section className="cta products-cta" id="contact">
-        <div className="cta-aurora" />
+        <div className="cta-aurora"><Aurora colorStops={['#1351D8', '#6fcff5', '#0b3aa8']} amplitude={1.2} blend={0.6} /></div>
         <div className="cta-inner">
-          <div className="section-label light">HAVE A PROJECT IN MIND?</div>
-          <h2>Not sure which product<br /><span>fits your business?</span></h2>
-          <p>Talk to our team and we&apos;ll point you to the right solution.</p>
-          <button className="primary lightbtn">Contact Us <ArrowUpRight size={18} /></button>
+          <div className="cta-copy">
+            <div className="section-label light">HAVE A PROJECT IN MIND?</div>
+            <h2>Not sure which product<br /><span>fits your business?</span></h2>
+            <p>Talk to our team and we&apos;ll point you to the right solution.</p>
+          </div>
+          <form className="cta-form" onSubmit={e => e.preventDefault()}>
+            <h3>Talk to our team</h3>
+            <div className="cta-row"><label>Full Name<input type="text" name="name" placeholder="Your name" required /></label><label>Work Email<input type="email" name="email" placeholder="you@company.com" required /></label></div>
+            <div className="cta-row"><label>Company<input type="text" name="company" placeholder="Company name" /></label><label>Phone Number<input type="tel" name="phone" placeholder="+1 555 000 0000" /></label></div>
+            <label>Message<textarea name="message" rows="4" placeholder="Tell us about your requirements" /></label>
+            <button type="submit" className="primary lightbtn">Contact Us <ArrowUpRight size={18} /></button>
+          </form>
         </div>
       </section>
     </>

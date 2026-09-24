@@ -81,6 +81,7 @@ function FireGuardVR() {
         </div>
 
         <div className="fg-visual">
+          <div className="hero-aurora"><Aurora colorStops={['#1351D8', '#6fcff5', '#0b3aa8']} amplitude={1} blend={0.55} /></div>
           <div className="fg-video-placeholder">
             <span>Video placeholder</span>
           </div>

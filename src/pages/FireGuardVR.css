@@ -1,7 +1,7 @@
 /* ===== FIREGUARD VR — REDESIGNED SECTIONS ===== */
 
 /* 01 — HERO visuals */
-.fg-video-placeholder{aspect-ratio:16/10;border-radius:18px;border:1px solid var(--line);background:#eef2f5;display:grid;place-items:center;color:var(--muted);font-size:13px;letter-spacing:.8px;width:100%}
+.fg-video-placeholder{aspect-ratio:16/10;border-radius:18px;border:1px solid var(--line);background:#eef2f5;display:grid;place-items:center;color:var(--muted);font-size:13px;letter-spacing:.8px;width:100%;max-width:400px;align-self:center}
 .fg-visual .fg-microstats{max-width:none;width:100%}
 .bd-hero-wrap{width:100%}
 .bd-hero-tabs{display:flex;gap:8px;justify-content:center;margin-bottom:16px}
@@ -22,14 +22,14 @@
 .bd-v4-next{margin-left:auto;background:#eef2f5;color:var(--muted);border-radius:20px;padding:3px 8px;font-size:9px;font-weight:800}
 .bd-what{padding:80px 8%;background:#fff;display:grid;grid-template-columns:.9fr 1.15fr;gap:48px;align-items:center}
 .bd-what-label{font-size:11px;letter-spacing:1.8px;font-weight:600;color:var(--blue);font-family:'Syne',sans-serif}
-.bd-what-left h2{font-family:var(--head);font-weight:600;font-size:clamp(32px,3.4vw,46px);line-height:1.08;letter-spacing:-1.6px;color:var(--navy);margin:14px 0 16px}
-.bd-what-left p{font-size:14px;line-height:1.7;color:var(--muted);margin:0;max-width:440px}
+.bd-what-left h2{font-family:var(--head);font-weight:600;font-size:clamp(38px,4.6vw,62px);line-height:1.05;letter-spacing:-2.8px;color:var(--navy);margin:22px 0 0}
+.bd-what-left p{font-size:17px;line-height:1.7;color:var(--muted);margin:26px 0 0;max-width:520px}
 .bd-what-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .bd-what-card{background:#fff;border:1px solid #e9eaed;border-radius:14px;padding:22px;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
 .bd-what-card:hover{transform:translateY(-4px);border-color:var(--blue);box-shadow:0 12px 30px rgba(19,81,216,.12)}
-.bd-what-icon{width:32px;height:32px;border-radius:8px;background:transparent;border:1px solid var(--line);color:var(--navy);display:grid;place-items:center;margin-bottom:14px;transition:background .25s ease,border-color .25s ease,color .25s ease}
+.bd-what-icon{width:44px;height:44px;border-radius:10px;background:transparent;border:1px solid var(--line);color:var(--navy);display:grid;place-items:center;margin-bottom:16px;transition:background .25s ease,border-color .25s ease,color .25s ease}
 .bd-what-card:hover .bd-what-icon{background:var(--blue);border-color:var(--blue);color:#fff}
-.bd-what-card h3{font-family:var(--head);font-size:13px;font-weight:700;margin:0 0 8px;color:var(--navy)}
+.bd-what-card h3{font-family:var(--head);font-size:17px;font-weight:700;margin:0 0 8px;color:var(--navy)}
 .bd-what-card p{font-size:12.5px;line-height:1.6;color:var(--muted);margin:0}
 .bd-hero-art{height:520px;position:relative;display:grid;place-items:center}
 .bd-orbital{position:absolute;border:1px solid rgba(19,81,216,.13);border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}
